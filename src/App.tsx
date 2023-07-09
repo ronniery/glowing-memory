@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+
 import logo from "./logo.svg";
 import "./App.css";
 
+
 function App() {
+  useEffect(() => {
+    const fetchTickets = async () => {
+      const {data} = await axios.get('http://localhost:3000/tickets');
+
+      console.log(`Fetched tickets: ${JSON.stringify(data)}`)
+    }
+
+    fetchTickets();
+  })
+
   return (
     <div className="App">
       <header className="App-header">
