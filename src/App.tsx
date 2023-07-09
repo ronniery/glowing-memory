@@ -4,17 +4,16 @@ import axios from "axios";
 import logo from "./logo.svg";
 import "./App.css";
 
-
 function App() {
   useEffect(() => {
     const fetchTickets = async () => {
-      const {data} = await axios.get('http://localhost:3000/tickets');
+      const { data } = await axios.get("http://localhost:46000/tickets");
 
-      console.log(`Fetched tickets: ${JSON.stringify(data)}`)
-    }
+      console.log(`Fetched tickets: ${JSON.stringify(data)}`);
+    };
 
     fetchTickets();
-  })
+  });
 
   return (
     <div className="App">
