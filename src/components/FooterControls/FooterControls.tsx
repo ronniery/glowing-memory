@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Grid from "@mui/material/Grid";
 
-const Footer = (): JSX.Element => {
+const FooterControls = (): JSX.Element => {
   return (
     <Box>
       <Grid
@@ -25,7 +25,7 @@ const Footer = (): JSX.Element => {
             Create Randomly
           </Button>
         </Grid>
-        <Grid item xs={2} >
+        <Grid item xs={2}>
           <Button
             variant="contained"
             size="medium"
@@ -39,4 +39,4 @@ const Footer = (): JSX.Element => {
   );
 };
 
-export default Footer;
+export default FooterControls;

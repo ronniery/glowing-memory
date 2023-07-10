@@ -1,14 +1,15 @@
 import { JSX } from "react/jsx-runtime";
 import { PageContainer } from "./index.styled";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import FooterControls from "../../components/FooterControls/FooterControls";
+import Header from "../../components/Header/Header";
+import TicketList from "../../components/TicketList/TicketList";
 
 const TicketBoard = (): JSX.Element => {
   return (
     <PageContainer>
       <Header />
-      Testing
-      <Footer />
+      <TicketList />
+      <FooterControls />
     </PageContainer>
   );
 };

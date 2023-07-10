@@ -1,7 +1,6 @@
 import { JSX } from "react/jsx-runtime";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
