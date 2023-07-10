@@ -4,6 +4,7 @@ import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { IconWrapper } from "./Header.styled";
+import { colors } from "../../utils/constants";
 
 const Header = (): JSX.Element => {
   return (
@@ -16,7 +17,7 @@ const Header = (): JSX.Element => {
     >
       <Grid item>
         <IconWrapper>
-          <EventRepeatIcon fontSize="medium" htmlColor="#1d476f" />
+          <EventRepeatIcon fontSize="medium" htmlColor={colors.chathamsBlue} />
         </IconWrapper>
       </Grid>
       <Grid item display="flex" justifyContent="center" alignItems="center">
