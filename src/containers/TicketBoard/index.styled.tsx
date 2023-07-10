@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const PageContainer = styled(Box)(() => ({
   border: "thin solid rgb(204 204 204 / 62%)",
