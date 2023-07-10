@@ -6,10 +6,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/date-and-time": "^0.13.0",
     "@types/jest": "^27.5.2",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "date-and-time": "^3.0.2",
     "typescript": "latest"
   },
   "dependencies": {
@@ -20,7 +22,6 @@
     "@mui/material": "^5.13.7",
     "@mui/styled-engine-sc": "^5.12.0",
     "axios": "^1.4.0",
-    "date-and-time": "^3.0.2",
     "fishery": "^2.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
