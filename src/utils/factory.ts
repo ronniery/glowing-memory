@@ -1,10 +1,11 @@
 import { Factory } from 'fishery';
 import { faker } from '@faker-js/faker';
+import { v4 as uuidv4 } from 'uuid';
 import date from 'date-and-time';
 
 import { type Ticket } from '../models/interfaces/ticket.interface';
 
-const ticket = Factory.define<Omit<Ticket, '_id'>>(() => {
+const ticket = Factory.define<Ticket>(() => {
   const lastDays = date.addDays(new Date(), -2);
   const nextDays = date.addDays(new Date(), 2);
 
@@ -13,6 +14,7 @@ const ticket = Factory.define<Omit<Ticket, '_id'>>(() => {
     status: faker.datatype.boolean() ? 'open' : 'closed',
     issue: faker.lorem.lines({ min: 1, max: 3 }),
     deadline: faker.date.between({ from: lastDays, to: nextDays }).toISOString(),
+    _id: uuidv4()
   };
 });
 
