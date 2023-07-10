@@ -9,7 +9,7 @@ const FooterControls = (): JSX.Element => {
     <Grid
       p={1.5}
       spacing={2}
-      gridAutoColumns={{ xs: 12 }}
+      columns={{ xs: 12 }}
       container
       justifyContent="flex-end"
     >
