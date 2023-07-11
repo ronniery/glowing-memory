@@ -3,8 +3,12 @@ import Grid from "@mui/material/Grid";
 
 import ButtonControl from "./ButtonControl";
 import { ExpandableGrid } from "./FooterControls.styled";
+import { useContext } from "react";
+import { TicketContext } from "../../contexts/ticket.context";
 
 const FooterControls = (): JSX.Element => {
+  const { createNewTicket } = useContext(TicketContext);
+
   return (
     <Grid
       p={1.5}
@@ -14,7 +18,11 @@ const FooterControls = (): JSX.Element => {
       justifyContent="flex-end"
     >
       <ExpandableGrid item zeroMinWidth>
-        <ButtonControl label="Create Randomly" fullWidth />
+        <ButtonControl
+          label="Create Randomly"
+          fullWidth
+          onClick={() => createNewTicket()}
+        />
       </ExpandableGrid>
       <ExpandableGrid item zeroMinWidth>
         <ButtonControl label="Create New" fullWidth />

@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { v4 as uuidv4 } from "uuid";
 
 import { TicketContainer, TicketSection } from "./TicketList.styled";
-import { Ticket } from "../../models/interfaces/ticket.interface";
-import { factory } from "../../utils/factory";
 import TicketViewer from "./TicketViewer";
+import { TicketContext } from "../../contexts/ticket.context";
 
 const TicketList: React.FC = (): JSX.Element => {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-
-  useEffect(() => {
-    setTickets(factory.ticket.buildList(15));
-  }, []);
+  const { tickets } = useContext(TicketContext);
 
   return (
     <TicketContainer columns={{ xs: 12 }} container justifyContent="flex-start">
