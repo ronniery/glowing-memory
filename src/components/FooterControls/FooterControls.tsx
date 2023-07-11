@@ -25,7 +25,15 @@ const FooterControls = (): JSX.Element => {
         />
       </ExpandableGrid>
       <ExpandableGrid item zeroMinWidth>
-        <ButtonControl label="Create New" fullWidth />
+        <ButtonControl
+          label="Create New"
+          fullWidth
+          onClick={() =>
+            alert(
+              "I'm just compounding the layout. In fact, I'm doing nothing 😄"
+            )
+          }
+        />
       </ExpandableGrid>
     </Grid>
   );
