@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import ButtonControl from "./ButtonControl";
 import { ExpandableGrid } from "./FooterControls.styled";
 import { useContext } from "react";
-import { TicketContext } from "../../contexts/ticket.context";
+import { TicketContext } from "../../utils/contexts/ticket.context";
 
 const FooterControls = (): JSX.Element => {
   const { createNewTicket } = useContext(TicketContext);

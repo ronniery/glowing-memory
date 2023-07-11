@@ -1,14 +1,18 @@
-import TicketBoard from "./containers/TicketBoard";
 import Container from "@mui/material/Container";
-import TicketProvider from "./contexts/ticket.context";
+import { SnackbarProvider } from "notistack";
+
+import TicketBoard from "./containers/TicketBoard";
+import TicketProvider from "./utils/contexts/ticket.context";
 
 function App() {
   return (
-    <TicketProvider>
-      <Container>
-        <TicketBoard />
-      </Container>
-    </TicketProvider>
+    <SnackbarProvider maxSnack={3}>
+      <TicketProvider>
+        <Container>
+          <TicketBoard />
+        </Container>
+      </TicketProvider>
+    </SnackbarProvider>
   );
 }
 

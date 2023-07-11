@@ -8,7 +8,7 @@ import {
   TicketContent,
 } from "./TicketViewer.styled";
 import { Ticket } from "../../models/ticket.model";
-import { TicketContext } from "../../contexts/ticket.context";
+import { TicketContext } from "../../utils/contexts/ticket.context";
 
 export type TicketViewerProps = {
   ticket: Ticket;
@@ -34,10 +34,9 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
       <Grid item>
         <Switch
           color="success"
-          checked={ticket.status === 'open'}
+          checked={ticket.status === "open"}
           onChange={() => {
-            debugger;
-            updateTicketById(ticket._id, ticket.getOppositeStatus())
+            updateTicketById(ticket._id, ticket.getOppositeStatus());
           }}
         />
         <TicketStatus color={ticket.getFlagStatus()} checked />

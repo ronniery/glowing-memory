@@ -1,6 +1,8 @@
 import { useContext } from "react";
-import Grid from "@mui/material/Grid";
 import { v4 as uuidv4 } from "uuid";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 import {
   NoTicketContainer,
@@ -8,9 +10,7 @@ import {
   TicketSection,
 } from "./TicketList.styled";
 import TicketViewer from "./TicketViewer";
-import { TicketContext } from "../../contexts/ticket.context";
-import Link from "@mui/material/Link";
-import { Typography } from "@mui/material";
+import { TicketContext } from "../../utils/contexts/ticket.context";
 
 const TicketList: React.FC = (): JSX.Element => {
   const { tickets, createNewTicket } = useContext(TicketContext);
@@ -40,7 +40,6 @@ const TicketList: React.FC = (): JSX.Element => {
           ))}
         </TicketSection>
       )}
-
       <Grid item sx={{ display: { xs: "none", md: "block" } }} xs={6} />
     </TicketContainer>
   );
