@@ -30,7 +30,7 @@ const TicketProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const createNewTicket = debounce(
     async (ticket?: Ticket): Promise<Ticket | undefined | any> => {
       try {
-        const _ticket = ticket ?? factory.ticket.withId.build();
+        const _ticket = ticket ?? factory.ticket.withoutId.build();
         const createdTicket = await createTicket(_ticket);
         setTickets([...tickets, createdTicket]);
         return createdTicket;

@@ -19,7 +19,7 @@ export class Ticket {
 
   getFlagStatus(): 'error' | 'warning' | 'success' {
     const today = new Date();
-
+    
     if (this.status === 'open' && today.getTime() > this.deadline.getTime()) {
       return 'error'; // red
     } else if (this.status === 'open' && today.getTime() < this.deadline.getTime()) {

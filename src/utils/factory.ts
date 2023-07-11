@@ -12,7 +12,7 @@ const withId = Factory.define<Ticket>(() => {
   return new Ticket({
     client: faker.company.name(),
     status: faker.datatype.boolean() ? 'open' : 'closed',
-    issue: faker.lorem.lines({ min: 6, max: 12 }),
+    issue: faker.lorem.sentence({ min: 26, max: 40 }),
     deadline: faker.date.between({ from: lastDays, to: nextDays }).toISOString(),
     _id: uuidv4()
   });
