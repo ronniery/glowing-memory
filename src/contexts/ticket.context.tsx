@@ -1,4 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
+import debounce from "@mui/utils/debounce";
+
 import { Ticket, TicketStatus } from "../models/ticket.model";
 import {
   createTicket,
@@ -15,24 +17,33 @@ type ContextProps = {
 
 export const TicketContext = React.createContext<ContextProps>({
   tickets: [],
-  createNewTicket: async () => Promise.resolve({} as Ticket),
+  createNewTicket: async () => ({} as Ticket),
   updateTicketById: async () => {},
 });
 
 const TicketProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {
   const [tickets, setTickets] = React.useState<Ticket[]>([]);
 
-  const createNewTicket = async (
-    ticket: Ticket = factory.ticket.build()
-  ): Promise<Ticket> => {
-    const createdTicket = await createTicket(ticket);
+  const createNewTicket = debounce(async (ticket?: Ticket): Promise<Ticket> => {
+    const _ticket = ticket ?? factory.ticket.withoutId.build();
+    const createdTicket = await createTicket(_ticket);
     setTickets([...tickets, createdTicket]);
     return createdTicket;
-  };
+  }, 300);
 
-  const updateTicketById = async (ticketId: string, status: TicketStatus) => {
-    return updateTicket(ticketId, status);
-  };
+  const updateTicketById = debounce(
+    async (ticketId: string, status: TicketStatus) => {
+      const serverTicket = await updateTicket(ticketId, status);
+      const updatedTickets = tickets.flatMap((ticket) =>
+        ticket._id === ticketId
+          ? new Ticket({ ...ticket, ...serverTicket })
+          : ticket
+      );
+
+      setTickets(updatedTickets);
+    },
+    300
+  );
 
   const loadAllTickets = async (): Promise<void> => {
     setTickets(await getTickets());

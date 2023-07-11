@@ -5,17 +5,24 @@ import date from 'date-and-time';
 
 import { Ticket } from '../models/ticket.model';
 
-const ticket = Factory.define<Ticket>(() => {
+const withId = Factory.define<Ticket>(() => {
   const lastDays = date.addDays(new Date(), -2);
   const nextDays = date.addDays(new Date(), 2);
 
   return new Ticket({
     client: faker.company.name(),
     status: faker.datatype.boolean() ? 'open' : 'closed',
-    issue: faker.lorem.lines({ min: 1, max: 3 }),
+    issue: faker.lorem.lines({ min: 6, max: 12 }),
     deadline: faker.date.between({ from: lastDays, to: nextDays }).toISOString(),
     _id: uuidv4()
   });
 });
+
+const withoutId = Factory.define<Omit<Ticket, '_id'>>(() => {
+  const { _id, ...ticket } = withId.build();
+  return new Ticket(ticket);
+})
+
+const ticket = { withId, withoutId }
 
 export const factory = { ticket };

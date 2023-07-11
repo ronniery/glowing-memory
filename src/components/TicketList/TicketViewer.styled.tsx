@@ -9,10 +9,13 @@ export const TicketContent = styled(Grid)({
   borderRadius: "8px",
   backgroundColor: colors.hawkesBlues,
   height: "fit-content",
-  marginBottom: "10px",
   paddingRight: "12px",
   paddingLeft: "12px",
   paddingBottom: "12px",
+
+  "&:not(:last-child)": {
+    marginBottom: "10px",
+  },
 });
 
 export const TicketClient = styled(Typography)({

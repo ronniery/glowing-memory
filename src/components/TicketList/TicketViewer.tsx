@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Grid, Typography, Switch } from "@mui/material";
 
 import {
@@ -7,6 +8,7 @@ import {
   TicketContent,
 } from "./TicketViewer.styled";
 import { Ticket } from "../../models/ticket.model";
+import { TicketContext } from "../../contexts/ticket.context";
 
 export type TicketViewerProps = {
   ticket: Ticket;
@@ -17,6 +19,8 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
   ticket,
   position,
 }): JSX.Element => {
+  const { updateTicketById } = useContext(TicketContext);
+
   return (
     <TicketContent container alignItems="center" justifyContent="space-between">
       <Grid item zeroMinWidth xs={6}>
@@ -28,10 +32,17 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
         <Typography>{ticket.getFormattedDeadline()}</Typography>
       </Grid>
       <Grid item>
-        <Switch color="success" />
+        <Switch
+          color="success"
+          checked={ticket.status === 'open'}
+          onChange={() => {
+            debugger;
+            updateTicketById(ticket._id, ticket.getOppositeStatus())
+          }}
+        />
         <TicketStatus color={ticket.getFlagStatus()} checked />
       </Grid>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <TicketIssue
           placeholder="Message"
           readOnly

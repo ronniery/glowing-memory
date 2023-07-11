@@ -21,7 +21,7 @@ const getTickets = async (): Promise<Ticket[]> => {
   return data;
 }
 
-const createTicket = async (ticket: Ticket): Promise<Ticket> => {
+const createTicket = async (ticket: Omit<Ticket, '_id'>): Promise<Ticket> => {
   const { data } = await api.post('/tickets', ticket, {
     transformResponse: (data: string): Ticket => {
       return new Ticket(JSON.parse(data) ?? {});
@@ -31,13 +31,10 @@ const createTicket = async (ticket: Ticket): Promise<Ticket> => {
   return data;
 }
 
-const updateTicket = async (ticketId: string, status: TicketStatus): Promise<void> => {
+const updateTicket = async (ticketId: string, status: TicketStatus): Promise<Ticket> => {
   const { data } = await api.put(`/tickets/${ticketId}`, { status }, {
-    transformResponse: (data: string): Ticket[] => {
-      debugger;
-      const { tickets = [] } = JSON.parse(data) ?? {};
-
-      return tickets;
+    transformResponse: (data: string): Ticket => {
+      return new Ticket(JSON.parse(data) ?? {});
     }
   });
 
