@@ -1,5 +1,4 @@
 import { Grid, Typography, Switch } from "@mui/material";
-import date from "date-and-time";
 
 import {
   TicketClient,
@@ -7,7 +6,7 @@ import {
   TicketIssue,
   TicketContent,
 } from "./TicketViewer.styled";
-import { Ticket } from "../../models/interfaces/ticket.interface";
+import { Ticket } from "../../models/ticket.model";
 
 export type TicketViewerProps = {
   ticket: Ticket;
@@ -26,13 +25,11 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
         </TicketClient>
       </Grid>
       <Grid item xs={2}>
-        <Typography>
-          {date.format(new Date(ticket.deadline), "DD/MM/YYYY")}
-        </Typography>
+        <Typography>{ticket.getFormattedDeadline()}</Typography>
       </Grid>
       <Grid item>
         <Switch color="success" />
-        <TicketStatus color="warning" checked />
+        <TicketStatus color={ticket.getFlagStatus()} checked />
       </Grid>
       <Grid xs={12}>
         <TicketIssue

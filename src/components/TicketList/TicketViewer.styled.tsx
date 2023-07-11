@@ -26,14 +26,14 @@ export const TicketStatus = styled(Radio)({
 export const TicketIssue = styled("textarea")({
   overflow: "hidden",
   width: "calc(100% - 12px)",
-  "border-radius": "8px",
+  borderRadius: "8px",
   border: "thin solid transparent",
   height: "55px",
   pointerEvents: "none",
   fontFamily: "arial",
   userSelect: "none",
   fontSize: "17px",
-  "margin-top": "0px",
+  marginTop: "0px",
   padding: "5px",
   resize: "none",
 
