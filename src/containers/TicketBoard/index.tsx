@@ -7,7 +7,7 @@ import TicketList from "../../components/TicketList/TicketList";
 
 const TicketBoard = (): JSX.Element => {
   return (
-    <PageContainer>
+    <PageContainer data-testid="ticket-board">
       <Header />
       <TicketList />
       <FooterControls />

@@ -16,6 +16,7 @@ const FooterControls = (): JSX.Element => {
       columns={{ xs: 12 }}
       container
       justifyContent="flex-end"
+      role="footer-controls"
     >
       <ExpandableGrid item zeroMinWidth>
         <ButtonControl

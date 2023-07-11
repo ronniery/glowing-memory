@@ -22,7 +22,7 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
   const { updateTicketById } = useContext(TicketContext);
 
   return (
-    <TicketContent container alignItems="center" justifyContent="space-between">
+    <TicketContent data-testid="ticket-viewer" container alignItems="center" justifyContent="space-between">
       <Grid item zeroMinWidth xs={6}>
         <TicketClient noWrap title={ticket.client}>
           {position + 1}. {ticket.client}

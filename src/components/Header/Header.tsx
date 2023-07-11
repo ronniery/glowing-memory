@@ -14,6 +14,7 @@ const Header = (): JSX.Element => {
       columns={{ xs: 12 }}
       container
       justifyContent="flex-start"
+      role="heading"
     >
       <Grid item>
         <IconWrapper>

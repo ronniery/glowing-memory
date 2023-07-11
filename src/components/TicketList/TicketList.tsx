@@ -21,6 +21,7 @@ const TicketList: React.FC = (): JSX.Element => {
       container
       justifyContent="flex-start"
       alignContent="flex-start"
+      role="ticket-list"
     >
       {tickets.length === 0 ? (
         <NoTicketContainer item container xs={12} md={6}>
