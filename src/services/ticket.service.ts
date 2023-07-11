@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { Ticket, TicketStatus } from '../models/ticket.model';
 
 const api = axios.create({
@@ -23,8 +24,12 @@ const getTickets = async (): Promise<Ticket[]> => {
 
 const createTicket = async (ticket: Omit<Ticket, '_id'>): Promise<Ticket> => {
   const { data } = await api.post('/tickets', ticket, {
-    transformResponse: (data: string): Ticket => {
-      return new Ticket(JSON.parse(data) ?? {});
+    transformResponse: (data: string, _headers: Record<string, unknown>, status: number | undefined): Ticket | string => {
+      if ([200, 201].includes(status as number)) {
+        return new Ticket(JSON.parse(data) ?? {});
+      }
+
+      return data;
     }
   });
 
