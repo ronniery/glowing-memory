@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { FC, ReactNode, createContext, useEffect, useState } from 'react';
+import { FC, ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import debounce from '@mui/utils/debounce';
 
@@ -16,8 +15,10 @@ type ContextProps = {
 export const TicketContext = createContext<ContextProps>({
   tickets: [],
   createNewTicket: async () => ({}) as Ticket,
-  updateTicketById: async () => {},
+  updateTicketById: async () => Promise.resolve(),
 });
+
+export const useTickets = () => useContext(TicketContext);
 
 const TicketProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
