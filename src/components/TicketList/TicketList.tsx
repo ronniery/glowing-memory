@@ -1,15 +1,14 @@
-import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { NoTicketContainer, TicketContainer, TicketSection } from './TicketList.styled';
+import { useTickets } from '../../utils/contexts/ticket.context';
 import TicketViewer from './TicketViewer';
-import { TicketContext } from '../../utils/contexts/ticket.context';
 
 const TicketList: React.FC = (): JSX.Element => {
-  const { tickets, createNewTicket } = useContext(TicketContext);
+  const { tickets, createNewTicket } = useTickets();
 
   return (
     <TicketContainer
@@ -24,14 +23,14 @@ const TicketList: React.FC = (): JSX.Element => {
           <Typography fontSize={18}>
             There are no tickets created yet, please click on
             <br /> ➡️
-            <Link href="#" onClick={() => createNewTicket()}>
+            <Link href="#" data-testid="link-create-randomly" onClick={() => createNewTicket()}>
               Create Randomly
             </Link>{' '}
             to create your first ticket!
           </Typography>
         </NoTicketContainer>
       ) : (
-        <TicketSection item container xs={12} md={6}>
+        <TicketSection data-testid="ticket-section" item container xs={12} md={6}>
           {tickets.map((ticket, idx) => (
             <TicketViewer key={uuidv4()} position={idx} ticket={ticket} />
           ))}
