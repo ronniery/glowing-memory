@@ -36,7 +36,7 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
           color="success"
           checked={ticket.status === "open"}
           onChange={() => {
-            updateTicketById(ticket._id, ticket.getOppositeStatus());
+            updateTicketById(ticket._id as string, ticket.getOppositeStatus());
           }}
         />
         <TicketStatus color={ticket.getFlagStatus()} checked />
