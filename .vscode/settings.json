@@ -9,7 +9,21 @@
     "node_modules": true,
     "build": true,
     "api": true,
-    "scripts": true
+    "coverage": true,
+    "scripts": true,
+    ".editorconfig": true,
+    ".eslintrc.json": true,
+    ".gitattributes": true,
+    ".gitignore": true,
+    ".prettierignore": true,
+    ".prettierrc": true,
+    ".tool-versions": true,
+    "Dockerfile": true,
+    "jest.config.js": true,
+    "package-lock.json": true,
+    "README.md": true,
+    "babel.config.js": true,
+    "tsconfig.paths.json": true
   },
   "git.ignoreLimitWarning": true
 }
