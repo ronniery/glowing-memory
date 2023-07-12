@@ -9,7 +9,13 @@ const ButtonControl: React.FC<ButtonControlProps> = (props): JSX.Element => {
   const { label, ...restProps } = props;
 
   return (
-    <Button {...restProps} variant="contained" size="medium" endIcon={<ChevronRightIcon />}>
+    <Button
+      {...restProps}
+      variant="contained"
+      size="medium"
+      endIcon={<ChevronRightIcon />}
+      data-testid="button-control"
+    >
       <ButtonLabel>{label}</ButtonLabel>
     </Button>
   );
