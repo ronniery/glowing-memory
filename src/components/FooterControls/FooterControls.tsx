@@ -3,11 +3,10 @@ import Grid from '@mui/material/Grid';
 
 import ButtonControl from './ButtonControl';
 import { ExpandableGrid } from './FooterControls.styled';
-import { useContext } from 'react';
-import { TicketContext } from '../../utils/contexts/ticket.context';
+import { useTickets } from '../../utils/contexts/ticket.context';
 
 const FooterControls = (): JSX.Element => {
-  const { createNewTicket } = useContext(TicketContext);
+  const { createNewTicket } = useTickets();
 
   return (
     <Grid p={1.5} spacing={2} columns={{ xs: 12 }} container justifyContent="flex-end" role="footer-controls">
