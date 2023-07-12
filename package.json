@@ -14,7 +14,11 @@
     "@types/react-dom": "latest",
     "@types/uuid": "^9.0.2",
     "date-and-time": "^3.0.2",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "jest-environment-jsdom": "^29.6.1",
+    "prettier": "3.0.0",
     "ts-jest": "^29.1.1",
     "typescript": "latest"
   },
@@ -38,7 +42,8 @@
     "start": "bash scripts/setup.api.sh & react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "npx prettier --check \"src/**/*.{ts,tsx,js,json}\""
   },
   "eslintConfig": {
     "extends": [
