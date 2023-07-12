@@ -1,24 +1,16 @@
-import { useContext } from "react";
-import { Grid, Typography, Switch } from "@mui/material";
+import { useContext } from 'react';
+import { Grid, Typography, Switch } from '@mui/material';
 
-import {
-  TicketClient,
-  TicketStatus,
-  TicketIssue,
-  TicketContent,
-} from "./TicketViewer.styled";
-import { Ticket } from "../../models/ticket.model";
-import { TicketContext } from "../../utils/contexts/ticket.context";
+import { TicketClient, TicketStatus, TicketIssue, TicketContent } from './TicketViewer.styled';
+import { Ticket } from '../../models/ticket.model';
+import { TicketContext } from '../../utils/contexts/ticket.context';
 
 export type TicketViewerProps = {
   ticket: Ticket;
   position: number;
 };
 
-const TicketViewer: React.FC<TicketViewerProps> = ({
-  ticket,
-  position,
-}): JSX.Element => {
+const TicketViewer: React.FC<TicketViewerProps> = ({ ticket, position }): JSX.Element => {
   const { updateTicketById } = useContext(TicketContext);
 
   return (
@@ -34,7 +26,7 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
       <Grid item>
         <Switch
           color="success"
-          checked={ticket.status === "open"}
+          checked={ticket.status === 'open'}
           onChange={() => {
             updateTicketById(ticket._id as string, ticket.getOppositeStatus());
           }}
@@ -42,12 +34,7 @@ const TicketViewer: React.FC<TicketViewerProps> = ({
         <TicketStatus color={ticket.getFlagStatus()} checked />
       </Grid>
       <Grid item xs={12}>
-        <TicketIssue
-          placeholder="Message"
-          readOnly
-          unselectable="on"
-          defaultValue={ticket.issue}
-        />
+        <TicketIssue placeholder="Message" readOnly unselectable="on" defaultValue={ticket.issue} />
       </Grid>
     </TicketContent>
   );

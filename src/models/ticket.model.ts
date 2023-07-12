@@ -1,4 +1,4 @@
-import date from "date-and-time";
+import date from 'date-and-time';
 
 export type TicketStatus = 'open' | 'closed';
 
@@ -10,7 +10,7 @@ export class Ticket {
   public deadline: Date;
 
   constructor(json: Record<string, string | Date>) {
-    const id = (json.id ?? json._id) as string
+    const id = (json.id ?? json._id) as string;
 
     if (id) {
       this._id = id;
@@ -39,6 +39,6 @@ export class Ticket {
   }
 
   getFormattedDeadline(): string {
-    return date.format(this.deadline, "DD/MM/YYYY");
+    return date.format(this.deadline, 'DD/MM/YYYY');
   }
 }

@@ -43,7 +43,8 @@
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "prettier": "npx prettier --check \"src/**/*.{ts,tsx,js,json}\""
+    "prettier": "npx prettier --write \"src/**/*.{ts,tsx,js,json}\" --fix",
+    "lint": "npx eslint src/ --ext .js,.ts --config .eslintrc.json --fix"
   },
   "eslintConfig": {
     "extends": [
