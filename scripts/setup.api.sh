@@ -23,7 +23,7 @@ build_project () {
 
 run_server () {
   echo "Running server locally..."
-  node ./api/dist/server.js & disown
+  node ./dist/server.js & disown
 }
 
 setup_api () {
@@ -36,13 +36,8 @@ should_run_server () {
   status_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:${APP_PORT}/tickets)
 
   if [[ "$status_code" -ne 200 ]] ; then
-    # Server is not running, run it again!
-    rm -rf $SERVER_ROOT
-
     setup_api
   fi
 }
 
-# should_run_server
-
-run_server
+should_run_server
