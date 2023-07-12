@@ -1,4 +1,5 @@
 import { JSX } from 'react/jsx-runtime';
+import debounce from '@mui/utils/debounce';
 import Grid from '@mui/material/Grid';
 
 import ButtonControl from './ButtonControl';
@@ -7,11 +8,12 @@ import { useTickets } from '../../utils/contexts/ticket.context';
 
 const FooterControls = (): JSX.Element => {
   const { createNewTicket } = useTickets();
+  const debouncedCreateNewTicket = debounce(createNewTicket, 300);
 
   return (
     <Grid p={1.5} spacing={2} columns={{ xs: 12 }} container justifyContent="flex-end" role="footer-controls">
       <ExpandableGrid item zeroMinWidth>
-        <ButtonControl label="Create Randomly" fullWidth onClick={() => createNewTicket()} />
+        <ButtonControl label="Create Randomly" fullWidth onClick={() => debouncedCreateNewTicket()} />
       </ExpandableGrid>
       <ExpandableGrid item zeroMinWidth>
         <ButtonControl

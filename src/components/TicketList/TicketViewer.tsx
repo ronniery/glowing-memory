@@ -1,4 +1,5 @@
 import { Grid, Typography, Switch } from '@mui/material';
+import debounce from '@mui/utils/debounce';
 
 import { TicketClient, TicketStatus, TicketIssue, TicketContent } from './TicketViewer.styled';
 import { useTickets } from '../../utils/contexts/ticket.context';
@@ -11,6 +12,7 @@ export type TicketViewerProps = {
 
 const TicketViewer: React.FC<TicketViewerProps> = ({ ticket, position }): JSX.Element => {
   const { updateTicketById } = useTickets();
+  const debouncedUpdateTicketById = debounce(updateTicketById, 300);
 
   return (
     <TicketContent data-testid="ticket-viewer" container alignItems="center" justifyContent="space-between">
@@ -27,8 +29,8 @@ const TicketViewer: React.FC<TicketViewerProps> = ({ ticket, position }): JSX.El
           data-testid="ticket-switcher"
           color="success"
           checked={ticket.status === 'open'}
-          onChange={() => {
-            updateTicketById(ticket._id as string, ticket.getOppositeStatus());
+          onChange={async () => {
+            await debouncedUpdateTicketById(ticket._id as string, ticket.getOppositeStatus());
           }}
         />
         <TicketStatus data-testid="ticket-status" color={ticket.getFlagStatus()} checked />

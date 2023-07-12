@@ -1,10 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import debounce from '@mui/utils/debounce';
 import FooterControls from './FooterControls';
 
 const createNewTicket: jest.Mock = jest.fn();
 jest.mock('../../utils/contexts/ticket.context', () => ({
   useTickets: () => ({ createNewTicket }),
 }));
+
+jest.mock('@mui/utils/debounce');
 
 describe('FooterControls', () => {
   beforeEach(() => {
@@ -21,9 +24,14 @@ describe('FooterControls', () => {
   });
 
   it('calls createNewTicket when "Create Randomly" button is clicked', async () => {
+    // We had to mock debounce call, to ignore its scheduling execution
+    const debounceMock = debounce as jest.Mock<typeof debounce>;
+    debounceMock.mockImplementation((func: (...args: any[]) => any) => func);
+
     render(<FooterControls />);
 
     const [createRandomlyButton] = await screen.findAllByTestId('button-control');
+
     fireEvent.click(createRandomlyButton);
 
     expect(createNewTicket).toHaveBeenCalledTimes(1);

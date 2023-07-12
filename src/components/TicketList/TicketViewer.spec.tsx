@@ -1,5 +1,6 @@
-import React from 'react';
+import debounce from '@mui/utils/debounce';
 import { render, screen, fireEvent } from '@testing-library/react';
+
 import { useTickets } from '../../utils/contexts/ticket.context';
 import TicketViewer from './TicketViewer';
 import { Ticket } from '../../models/ticket.model';
@@ -8,9 +9,12 @@ jest.mock('../../utils/contexts/ticket.context', () => ({
   useTickets: jest.fn(),
 }));
 
+jest.mock('@mui/utils/debounce');
+
 describe('TicketViewer', () => {
-  const position = 0;
   const updateTicketByIdMock = jest.fn();
+
+  const position = 0;
   const ticket = {
     _id: '123',
     client: 'John Doe',
@@ -23,7 +27,7 @@ describe('TicketViewer', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    updateTicketByIdMock.mockClear();
     (useTickets as jest.Mock).mockReturnValue({
       updateTicketById: updateTicketByIdMock,
     });
@@ -50,10 +54,13 @@ describe('TicketViewer', () => {
     expect((ticketMessage as HTMLTextAreaElement).value).toBe('Sample issue');
   });
 
-  it('calls updateTicketById with the correct parameters when the switch is toggled', () => {
+  it('calls updateTicketById with the correct parameters when the switch is toggled', async () => {
+    // We had to mock debounce call, to ignore its scheduling execution
+    const debounceMock = debounce as jest.Mock<typeof debounce>;
+    debounceMock.mockImplementation((func: (...args: any[]) => any) => func);
+
     render(<TicketViewer ticket={ticket as unknown as Ticket} position={position} />);
 
-    console.log(screen.debug());
     const containerSwitcher = screen.getByTestId('ticket-switcher');
     const ticketSwitcher = containerSwitcher.querySelector('input[type="checkbox"]');
 
