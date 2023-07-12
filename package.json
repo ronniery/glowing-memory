@@ -47,7 +47,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "bash scripts/setup.api.sh & react-scripts start",
+    "start": "react-scripts start",
+    "start:dev": "bash scripts/setup.api.sh & react-scripts start",
     "build": "react-scripts build",
     "test": "jest --maxWorkers=5",
     "eject": "react-scripts eject",

@@ -1,3 +1,5 @@
+export const serverUrl = 'http://localhost:46000';
+
 export const colors = {
   seashell: '#f1f1f1',
   monsoon: '#888',

@@ -8,7 +8,7 @@ import { useTickets } from '../../utils/contexts/ticket.context';
 
 const FooterControls = (): JSX.Element => {
   const { createNewTicket } = useTickets();
-  const debouncedCreateNewTicket = debounce(createNewTicket, 300);
+  const debouncedCreateNewTicket = debounce(createNewTicket, 750);
 
   return (
     <Grid p={1.5} spacing={2} columns={{ xs: 12 }} container justifyContent="flex-end" role="footer-controls">

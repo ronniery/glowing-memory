@@ -1,6 +1,5 @@
 import { FC, ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import debounce from '@mui/utils/debounce';
 
 import { Ticket, TicketStatus } from '../../models/ticket.model';
 import { createTicket, getTickets, updateTicket } from '../../services/ticket.service';
@@ -24,7 +23,7 @@ const TicketProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
-  const createNewTicket = debounce(async (ticket?: Ticket): Promise<Ticket | undefined | any> => {
+  const createNewTicket = async (ticket?: Ticket): Promise<Ticket | undefined> => {
     try {
       const _ticket = ticket ?? factory.ticket.withoutId.build();
       const createdTicket = await createTicket(_ticket);
@@ -33,9 +32,9 @@ const TicketProvider: FC<{ children?: ReactNode }> = ({ children }) => {
     } catch (err) {
       enqueueSnackbar((err as Error).message, { variant: 'error' });
     }
-  }, 300);
+  };
 
-  const updateTicketById = debounce(async (ticketId: string, status: TicketStatus) => {
+  const updateTicketById = async (ticketId: string, status: TicketStatus) => {
     try {
       const serverTicket = await updateTicket(ticketId, status);
       const updatedTickets = tickets.flatMap((ticket) =>
@@ -46,7 +45,7 @@ const TicketProvider: FC<{ children?: ReactNode }> = ({ children }) => {
     } catch (err) {
       enqueueSnackbar((err as Error).message, { variant: 'error' });
     }
-  }, 300);
+  };
 
   const loadAllTickets = async (): Promise<void> => {
     try {

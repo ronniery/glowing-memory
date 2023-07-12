@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 import { Ticket, TicketStatus } from '../models/ticket.model';
+import { serverUrl } from '../utils/constants';
 
 const api = axios.create({
-  baseURL: 'http://localhost:46000',
+  baseURL: serverUrl,
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
