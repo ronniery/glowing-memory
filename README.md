@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Glowing Memory
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This frontend application provides users with the ability to manage created tickets, including features for creating, updating, and listing tickets. The application is designed to be mobile-friendly by default, ensuring a seamless user experience across various mobile devices and screen sizes. With its responsive design and adaptive layout, users can easily access and interact with the ticket management features on their smartphones or tablets. The mobile-friendly nature of the application allows users to conveniently perform ticket-related tasks while on the go, providing flexibility and accessibility for efficient ticket management anytime, anywhere.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+These instructions will give you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on deploying the project on a live system.
 
-### `npm start`
+### Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Requirements for the software and other tools to build, test and push:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- [Node.js](https://nodejs.org/en/download)
 
-### `npm test`
+### Installing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you don't want any headache configuring things, copy the following command below, and wait until the install process ends:
 
-### `npm run build`
+```
+  curl -k -o- https://raw.githubusercontent.com/ronniery/glowing-memory/master/install.sh | bash
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+However, if you want something more "hands-on" here is what you're looking for:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Checkout project locally
+2. Go inside the created folder `glowing-memory`, then run `npm install`
+3. If you want to run it locally:
+   - Run the command `PORT=46001 npm run start`. If you run this command, make sure you have an instance of the ticket microservice running in background [ronniery/solid-sniffle](https://github.com/ronniery/solid-sniffle)
+   - Run the command `PORT=46001 npm run start:dev`. If you **don't want to set up** the ticket microservice, a bash script will take care of it for you.
+4. If you want to run tests, run the command `npm run test`
+5. If you want to run docker locally:
+   - Run inside the project folder `docker build -t rbcorrea/glowing-memory .` to build the docker image locally
+   - Wait for the process finish, and then you can run `docker run -d -p 46001:46001 rbcorrea/glowing-memory` to spin up a container using the previous image
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Useful URLS
 
-### `npm run eject`
+- http://localhost:46001/ - SPA application, open it and use it.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Design, choices, and assumptions
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For the frontend application, I used what the React framework has to offer for us, I tried to isolate the generic components in a specific folder, and putting together all other interdependent parts, with that way we could import a single file that was compound by some small pieces, that could be used later somewhere else.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As a consequence of that application chattering, I had to create a cross-shared state, the best way to achieve it without installing any extra state manager, was thought the React.ContextAPI + React.Hooks, inside the ContextAPI, we have all service calls wrapped in a single interface that can be used across the entire application, centralizing the service consumption; Later, I was sharing the available tickets inside that context, letting the other parts that depend on it, react when the number of tickets change, as a handfull addition I've created a hook to make it easier to consume the Context, without to import some extra dependencies to load the context.
