@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ButtonControl from './ButtonControl';
 
@@ -7,7 +7,7 @@ describe('ButtonControl', () => {
   const onClickMock = jest.fn();
 
   afterEach(() => {
-    jest.clearAllMocks();
+    onClickMock.mockClear();
   });
 
   it('renders the button with the correct label', () => {
@@ -23,9 +23,11 @@ describe('ButtonControl', () => {
 
     const button = screen.getByTestId('button-control');
 
-    userEvent.click(button);
+    act(() => {
+      userEvent.click(button);
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
+      expect(onClickMock).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('renders the button with the end icon', () => {
