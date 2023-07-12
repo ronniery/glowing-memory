@@ -1,72 +1,57 @@
-import axios, { AxiosHeaders, AxiosRequestConfig, AxiosResponseTransformer, InternalAxiosRequestConfig } from 'axios';
+/**
+ * @jest-environment node
+ */
+import nock from 'nock';
+import { AxiosError } from 'axios';
+
 import { getTickets, createTicket, updateTicket } from './ticket.service';
-import { Ticket, TicketStatus } from '../models/ticket.model';
+import { Ticket } from '../models/ticket.model';
 import { factory } from '../utils/factory';
+import { serverUrl } from '../utils/constants';
 
 describe('Ticket Service', () => {
-  const mockAxios = axios as jest.Mocked<typeof axios>;
-
-  const mockTransformResponse = (response: Ticket | Ticket[], options: AxiosRequestConfig<unknown> | undefined) => {
-    const axiosFunctionTransformer = options?.transformResponse as AxiosResponseTransformer;
-    const transformResponse = axiosFunctionTransformer.bind({} as InternalAxiosRequestConfig);
-    transformResponse(JSON.stringify({ tickets: response }), {} as AxiosHeaders);
-
-    return Promise.resolve({ data: response })
-  }
-
-  afterEach(() => {
-    mockAxios.create.mockReturnThis();
-    mockAxios.get.mockReset();
-    mockAxios.post.mockReset();
-    mockAxios.put.mockReset();
-  });
-
   test('getTickets retrieves tickets correctly', async () => {
-    const mockTickets = factory.ticket.withId.buildList(2)
+    const mockTickets = factory.ticket.withId.buildList(2);
 
-    mockAxios.get
-      .mockImplementationOnce((_url, options) =>
-        mockTransformResponse(mockTickets, options)
-      );
+    nock(serverUrl).get('/tickets').reply(200, { tickets: mockTickets });
 
     const allTickets = await getTickets();
 
     expect(allTickets).toEqual(mockTickets);
-    expect(mockAxios.get).toHaveBeenCalledTimes(1);
-    expect(mockAxios.get).toHaveBeenCalledWith('/tickets', expect.any(Object));
   });
 
   test('createTicket creates a ticket correctly', async () => {
     const mockTicket = factory.ticket.withId.build();
 
-    mockAxios.post
-      .mockImplementationOnce((_url, _data, options) =>
-        mockTransformResponse(mockTicket, options)
-      )
+    nock(serverUrl).post('/tickets').reply(201, mockTicket);
 
     const createdTicket = await createTicket(mockTicket as Ticket);
 
     expect(createdTicket).toEqual(mockTicket);
-    expect(mockAxios.post).toHaveBeenCalledTimes(1);
-    expect(mockAxios.post).toHaveBeenCalledWith('/tickets', mockTicket, expect.any(Object));
   });
 
-  // test.skip('updateTicket updates a ticket correctly', async () => {
-  //   const ticketId = '1';
-  //   const mockTicket = factory.ticket.withId.build({ _id: ticketId, status: 'closed' });
-  //   const newStatus: TicketStatus = 'closed';
+  test('createTicket skip ticket creation if status are not between 200 and 201', async () => {
+    nock(serverUrl).post('/tickets').reply(400, new Error('Invalid Params'));
 
-  //   // const mockTicket = { _id: ticketId, issue: 'Ticket 1', client: 'Client 1', status: newStatus, deadline: '2023-07-31' };
+    try {
+      await createTicket({} as Ticket);
+    } catch (e) {
+      const axiosErr = e as AxiosError;
 
-  //   const expectedTicket = new Ticket(mockTicket);
+      expect(axiosErr instanceof AxiosError).toBeTruthy();
+      expect(axiosErr.code).toBe('ERR_BAD_REQUEST');
+      expect(axiosErr.response?.data).toBe('{}');
+      expect(axiosErr.response?.status).toBe(400);
+    }
+  });
 
-  //   mockAxios.put
-  //     .mockResolvedValueOnce({ data: JSON.stringify(expectedTicket) });
+  test('updateTicket updates a ticket correctly', async () => {
+    const mockTicket = factory.ticket.withId.build({ status: 'closed' });
 
-  //   const updatedTicket = await updateTicket(ticketId, newStatus);
+    nock(serverUrl).put('/tickets/1').reply(200, mockTicket);
 
-  //   expect(updatedTicket).toEqual(expectedTicket);
-  //   expect(mockAxios.put).toHaveBeenCalledTimes(1);
-  //   expect(mockAxios.put).toHaveBeenCalledWith(`/tickets/${ticketId}`, { status: newStatus }, expect.any(Object));
-  // });;
+    const updatedTicket = await updateTicket('1', 'closed');
+
+    expect(updatedTicket).toEqual(mockTicket);
+  });
 });
